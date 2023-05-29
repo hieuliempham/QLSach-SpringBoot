@@ -5,14 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import phamhieuliem.lab3.entity.Book;
 import phamhieuliem.lab3.services.BookService;
 import phamhieuliem.lab3.services.CategoryService;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -49,4 +47,33 @@ public class BookController {
         bookService.addBook(book);
         return "redirect:/books";
     }
+
+    @GetMapping("/delete/{id}")
+    public String deleteBook(@PathVariable Long id, Model model){
+        bookService.deleteBook(id);
+        return "redirect:/books";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editBookForm(@PathVariable Long id, Model model){
+        Book book = bookService.getBookById(id);
+        model.addAttribute("book", book);
+        model.addAttribute("selected", book.getCategory().getId());
+        model.addAttribute("categories", categoryService.getAllCategories());
+
+        return "book/edit";
+    }
+    @PostMapping("/edit")
+    public String editBook(@Valid @ModelAttribute("book") Book book, BindingResult result, Model model) throws IOException {
+        if(result.hasErrors()){
+            model.addAttribute("selected", book.getCategory().getId());
+            model.addAttribute("categories", categoryService.getAllCategories());
+            return "book/edit";
+        }
+        else {
+            bookService.updateBook(book);
+        }
+        return "redirect:/books";
+    }
+
 }
