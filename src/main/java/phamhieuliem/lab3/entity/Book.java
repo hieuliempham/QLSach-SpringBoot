@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 import phamhieuliem.lab3.validator.annotation.ValidCategoryId;
+import phamhieuliem.lab3.validator.annotation.ValidUserId;
 
 @Data
 @Entity
@@ -27,7 +28,12 @@ public class Book {
     private Double price;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
     @ValidCategoryId
     private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ValidUserId
+    private User user;
 }
