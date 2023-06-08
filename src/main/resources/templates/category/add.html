@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Category</title>
+  <link th:href="@{/css/style.css}" rel="stylesheet"/>
+  <block th:replace="layout :: link-css"></block>
+</head>
+<body>
+<th:block th:replace="layout :: header"></th:block>
+<div class="container">
+  <h1>Add Category</h1>
+  <form th:action="@{/categories/add}" th:object="${category}" method="POST">
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" class="form-control" id="name" th:field="*{name}">
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Add Category</button>
+  </form>
+</div>
+<th:block  th:replace="layout :: footer"></th:block>
+</body>
+</html>
