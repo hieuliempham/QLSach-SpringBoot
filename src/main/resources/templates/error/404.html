@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Not Found</title>
+  <link th:href="@{/css/style.css}" rel="stylesheet"/>
+  <link th:replace="layout :: link-css"/>
+</head>
+<body>
+<th:block th:replace="layout :: header"></th:block>
+<div class="d-flex align-items-center justify-content-center vh-25">
+  <div class="text-center">
+    <h1 class="display-1 fw-bold">404</h1>
+    <p class="fs-3"><span class="text-danger">Opps!</span> Page is not exists.</p>
+    <p class="lead">
+      The page you are looking for might have been removed.
+    </p>
+    <a href="/" class="btn btn-primary">Back to homepage</a>
+  </div>
+</div>
+<th:block th:replace="layout :: footer"></th:block>
+</body>
+</html>
