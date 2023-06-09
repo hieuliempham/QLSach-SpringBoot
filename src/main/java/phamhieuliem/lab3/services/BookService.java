@@ -29,6 +29,6 @@ public class BookService {
     }
 
     public void updateBook(Book book){
-        bookRepository.save(book);
+        bookRepository.saveAndFlush(book);
     }
 }
