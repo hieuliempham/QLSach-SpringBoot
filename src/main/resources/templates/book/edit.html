@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
   <meta charset="UTF-8">
   <th:block th:replace="layout :: link-css"></th:block>
@@ -7,40 +8,44 @@
 </head>
 <body>
 <th:block th:replace="layout :: header"></th:block>
-<div class="container">
+<div class="container" id="edit-form-modal">
   <h1>Edit Book</h1>
-  <form th:action="@{/books/edit}" th:object="${book}" method="post">
-    <!--    <div class="col-6 mb-3">-->
-    <!--      <label for="id" class="form-label">Id: </label>-->
-    <!--      <input type="text" class="form-control" th:field="*{id}" id="id">-->
-    <!--    </div>-->
-<!--    <div type="hidden" th:field="*{id}"></div>-->
-    <div class="col-6 mb-3">
-      <label for="title" class="form-label">Title: </label>
-      <input type="text" class="form-control" th:field="*{title}" id="title">
-      <span class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
-    </div>
-    <div class="col-6 mb-3">
-      <label for="author" class="form-label">Author:</label>
-      <input type="text" class="form-control" th:field="*{author}" id="author">
-    </div>
-    <div class="col-6 mb-3">
-      <label for="price" class="form-label">Price: </label>
-      <input type="text" class="form-control" th:field="*{price}" id="price">
-      <span class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
-    </div>
-    <div class="col-6 mb-3">
-      <label for="category" class="form-label">Category:</label>
-      <select name="category.id" id="category" class="form-control">
-        <option value="">-- Select Category --</option>
-        <option th:each="category : ${categories}" th:selected="${category.id==selected}"  th:value="${category.id}"
-                th:text="${category.name}"></option>
-      </select>
-<!--      <span class="text-danger" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></span>-->
+  <td sec:authorize="hasAnyAuthority('ADMIN')">
+    <div id="edit-form-container">
+      <form th:action="@{/books/edit}" th:object="${book}" method="post">
+        <!--    <div class="col-6 mb-3">-->
+        <!--      <label for="id" class="form-label">Id: </label>-->
+        <!--      <input type="text" class="form-control" th:field="*{id}" id="id">-->
+        <!--    </div>-->
+        <!--    <div type="hidden" th:field="*{id}"></div>-->
+        <div class="col-6 mb-3">
+          <label for="title" class="form-label">Title: </label>
+          <input type="text" class="form-control" th:field="*{title}" id="title">
+          <span class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+        </div>
+        <div class="col-6 mb-3">
+          <label for="author" class="form-label">Author:</label>
+          <input type="text" class="form-control" th:field="*{author}" id="author">
+        </div>
+        <div class="col-6 mb-3">
+          <label for="price" class="form-label">Price: </label>
+          <input type="text" class="form-control" th:field="*{price}" id="price">
+          <span class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+        </div>
+        <div class="col-6 mb-3">
+          <label for="category" class="form-label">Category:</label>
+          <select name="category.id" id="category" class="form-control">
+            <option value="">-- Select Category --</option>
+            <option th:each="category : ${categories}" th:selected="${category.id==selected}"  th:value="${category.id}"
+                    th:text="${category.name}"></option>
+          </select>
+          <!--      <span class="text-danger" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></span>-->
 
+        </div>
+        <input type="submit" class="btn btn-primary" value="Save nhaaa!">
+      </form>
     </div>
-    <input type="submit" class="btn btn-primary" value="Save nhaaa!">
-  </form>
+  </td>
   <br>
   <a th:href="@{/books}">Back to List</a>
 </div>

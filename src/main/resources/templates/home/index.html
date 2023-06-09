@@ -4,17 +4,58 @@
     <meta charset="UTF-8">
     <title>ỨNG DỤNG QUẢN LÝ SÁCH KẾT NỐI CSDL</title>
     <th:block th:replace="layout :: link-css"></th:block>
+    <style>
+        .bg-1 {
+            background-color: #333 ; /* Orange : #FFA500 -- Green #1abc9c*/
+            color: #ffffff;
+          }
+
+        /* DEMO-SPECIFIC STYLES */
+        .typewriter h3 {
+          color: #fff;
+          font-family: monospace;
+          overflow: hidden; /* Ensures the content is not revealed until the animation */
+          border-right: .15em solid orange; /* The typwriter cursor */
+          white-space: nowrap; /* Keeps the content on a single line */
+          margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+          letter-spacing: .20em; /* Adjust as needed */
+          animation:
+            typing 3.5s steps(40, end),
+            blink-caret .5s step-end infinite;
+        }
+
+        /* The typing effect */
+        @keyframes typing {
+          from { width: 0 }
+          to { width: 100% }
+        }
+
+        /* The typewriter cursor effect */
+        @keyframes blink-caret {
+          from, to { border-color: transparent }
+          50% { border-color: orange }
+        }
+    </style>
 </head>
 <body>
     <th:block th:replace="layout :: header"></th:block>
     <div class="container">
       <div class="navbar navbar-light bg-light">
-        <div class="container-fluid">
-          <a href="#" class="navbar-brand">
-            TRANG CHỦ ỨNG DỤNG QUẢN LÝ SÁCH - KẾT NỐI CSDL MYYSQL
-          </a>
-        </div>
+          <div class="container-fluid text-center">
+              <a href="#" class="navbar-brand ">
+                TRANG CHỦ ỨNG DỤNG QUẢN LÝ SÁCH - KẾT NỐI CSDL MYYSQL
+              </a>
+          </div>
       </div>
+
+    </div>
+    <div class="container-fluid bg-1 text-center">
+        <h3 class="margin">Who Am I?</h3>
+        <img src="../static/image/hutech.png" class="img-responsive img-circle margin" style="display:inline" alt="Hutech" width="350" height="350">
+        <div class="typewriter">
+            <h3 style="width: fit-content;">I'm a HUTECH IT Coder.</h3>
+        </div>
+
     </div>
 <th:block th:replace="layout :: footer"></th:block>
 </body>

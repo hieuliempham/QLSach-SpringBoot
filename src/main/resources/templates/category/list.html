@@ -26,14 +26,38 @@
       <td th:text="${category.name}"></td>
       <td sec:authorize="hasAnyAuthority('ADMIN')">
         <a type="button" class="btn btn-success"
-           th:href="@{/categories/edit/{id}(id=${category.id})}">Edit</a>
+           th:href="@{/categories/edit/{id}(id=${category.id})}" onclick="editCategory(this); return false;">Edit</a>
         <a type="button" class="btn btn-danger"
-           th:href="@{/categories/delete/{id}(id=${category.id})}" onclick="return confirm('Dung hoi han nhaaaa????')">Delete</a>
+           th:href="@{/categories/delete/{id}(id=${category.id})}" onclick="deleteCategory(this); return false;">Delete</a>
       </td>
     </tr>
     </tbody>
   </table>
 </div>
+<script th:inline="javascript">
+    function deleteCategory(link){
+        if (confirm('Dung hoi han nhaaaa????')){
+        $.ajax({
+            url: $(link).attr('href'),
+            type: 'DELETE',
+            success: result -> {
+                if(!result.success){
+                    alert(result.message);
+                } else {
+                    $(link).parent().parent().remove();
+                    }
+                }
+        });
+        }
+    }
+
+    function editCategory(link){
+        $.get($(link).attr('href'), function(data){
+            $('#edit-form-container').html(data);
+            $('#edit-form-modal').modal('show');
+        });
+    }
+</script>
 <th:block  th:replace="layout :: footer"></th:block>
 </body>
 </html>

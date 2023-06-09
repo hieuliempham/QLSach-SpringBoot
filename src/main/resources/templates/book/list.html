@@ -26,9 +26,10 @@
             <td th:text="${book.price}"></td>
             <td th:text="${book.category != null ? book.category.name : 'N/A'}"></td>
             <td sec:authorize="hasAnyAuthority('ADMIN')">
-                <a type="button" class="btn btn-success" th:href="@{/books/edit/{id}(id=${book.id})}">Edit</a>
+                <a type="button" class="btn btn-success" th:href="@{/books/edit/{id}(id=${book.id})}"
+                    onclick="editBook(this); return false;">Edit</a>
                 <a type="button" class="btn btn-danger" th:href="@{/books/delete/{id}(id=${book.id})}"
-                   onclick="return confirm('Are you sure?')">Delete</a>
+                   onclick="deleteBook(this); return false;">Delete</a>
 
             </td>
 
@@ -51,6 +52,13 @@
                 }
         });
         }
+    }
+
+    function editBook(link){
+        $.get($(link).attr('href'), function(data){
+            $('#edit-form-container').html(data);
+            $('#edit-form-modal').modal('show');
+        });
     }
 </script>
 <th:block  th:replace="layout :: footer"></th:block>

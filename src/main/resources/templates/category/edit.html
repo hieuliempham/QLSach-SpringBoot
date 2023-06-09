@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
     <title>Edit Category</title>
@@ -8,17 +9,22 @@
 </head>
 <body>
 <th:block th:replace="layout :: header"></th:block>
-<div class="container">
+<div class="container" id="edit-form-modal">
     <h1>Edit Category</h1>
-    <form th:action="@{/categories/edit/{id}(id=${category.id})}" method="post" th:object="${category}">
-        <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" th:field="*{name}" class="form-control" required/>
-            <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+    <td sec:authorize="hasAnyAuthority('ADMIN')">
+        <div id="edit-form-container">
+            <form th:action="@{/categories/edit/{id}(id=${category.id})}" method="post" th:object="${category}">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" th:field="*{name}" class="form-control" required/>
+                    <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
         </div>
-        <br>
-        <button type="submit" class="btn btn-primary">Save</button>
-    </form>
+
+    </td>
 </div>
 <th:block  th:replace="layout :: footer"></th:block>
 </body>
