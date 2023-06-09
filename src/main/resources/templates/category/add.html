@@ -8,17 +8,38 @@
 </head>
 <body>
 <th:block th:replace="layout :: header"></th:block>
-<div class="container">
+<div class="container" id="add-form-modal">
   <h1>Add Category</h1>
-  <form th:action="@{/categories/add}" th:object="${category}" method="POST">
-    <div class="form-group">
-      <label for="name">Name:</label>
-      <input type="text" class="form-control" id="name" th:field="*{name}">
-    </div>
-    <br>
-    <button type="submit" class="btn btn-primary">Add Category</button>
-  </form>
+  <div id="add-form-container">
+       <form th:action="@{/categories/add}" th:object="${category}" method="POST">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="name" th:field="*{name}">
+      </div>
+      <br>
+      <button type="submit" class="btn btn-primary">Add Category</button>
+    </form>
+  </div>
 </div>
+<script th:inline="javascript">
+    $(function(){
+        $('form').submit(function(event){
+            event.preventDefault();
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function(result){
+                    $('#add-form-modal').modal('hide');
+                    window.location.reload();
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    alert('Add Category Failed: ' + errorThrown);
+                }
+            });
+        });
+    });
+</script>
 <th:block  th:replace="layout :: footer"></th:block>
 </body>
 </html>

@@ -7,9 +7,10 @@
 </head>
 <body>
 <th:block th:replace="layout :: header"></th:block>
-<div class="container">
+<div class="container" id="add-form-modal">
   <h1>Add Book</h1>
-  <form th:action="@{/books/add}" th:object="${book}" method="post">
+  <div id="add-form-container">
+        <form th:action="@{/books/add}" th:object="${book}" method="post">
 <!--    <div class="col-6 mb-3">-->
 <!--      <label for="id" class="form-label">Id: </label>-->
 <!--      <input type="text" class="form-control" th:field="*{id}" id="id">-->
@@ -40,9 +41,30 @@
     </div>
     <input type="submit" class="btn btn-primary" value="Save nhaaa!">
   </form>
+  </div>
   <br>
   <a th:href="@{/books}">Back to List</a>
 </div>
+
+<script th:inline="javascript">
+    $(function(){
+        $('form').submit(function(event){
+            event.preventDefault();
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function(result){
+                    $('#add-form-modal').modal('hide');
+                    window.location.reload();
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    alert('Add Book Failed: ' + errorThrown);
+                }
+            });
+        });
+    });
+</script>
 <th:block  th:replace="layout :: footer"></th:block>
 </body>
 </html>

@@ -24,9 +24,9 @@
                         <a href="/" class="nav-link active" aria-current="page">Home</a>
                     </li>
                     <li class="nav-item"><a href="/books" class="nav-link">List Book</a></li>
-                    <li sec:authorize="hasAnyAuthority('ADMIN')" class="nav-item"><a href="/books/add" class="nav-link">Add Book</a></li>
+                    <li sec:authorize="hasAnyAuthority('ADMIN')" class="nav-item"><a href="/books/add" class="nav-link" onclick="addBook(this); return false;">Add Book</a></li>
                     <li class="nav-item"><a class="nav-link" href="/categories">List Category</a> </li>
-                    <li sec:authorize="hasAnyAuthority('ADMIN')" class="nav-item"><a class="nav-link" href="/categories/add">Add Category</a> </li>
+                    <li sec:authorize="hasAnyAuthority('ADMIN')" class="nav-item"><a class="nav-link" href="/categories/add" onclick="addCategory(this); return false;">Add Category</a> </li>
                     <li sec:authorize="isAuthenticated()">
                         <form th:action="@{/logout}" method="post">
                             <button class="btn btn-outline-danger float-right" type="submit">Logout</button>
@@ -46,6 +46,22 @@
 </div>
 <footer th:fragment="footer">
     <script th:src="@{/js/bootstrap.min.js}"></script>
+
+    <script th:inline="javascript">
+        function addBook(link){
+            $.get($(link).attr('href'), function(data){
+                $('#add-form-container').html(data);
+                $('#add-form-modal').modal('show');
+            });
+        }
+
+        function addCategory(link){
+            $.get($(link).attr('href'), function(data){
+                $('#add-form-container').html(data);
+                $('#add-form-modal').modal('show');
+            });
+        }
+    </script>
 </footer>
 </body>
 </html>
